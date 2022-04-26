@@ -113,12 +113,12 @@ var sharedApplication: UIApplication?
     func createPlayer(completed: @escaping (_ view: UIView?) -> Void) {
         if self.unityIsInitiallized() && self._isUnityReady {
             completed(controller?.rootView)
+            return
         }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name("UnityReady"), object: nil, queue: OperationQueue.main, using: { note in
             self._isUnityReady = true
             completed(controller?.rootView)
-            return
         })
         
         DispatchQueue.main.async {
@@ -133,6 +133,7 @@ var sharedApplication: UIApplication?
             
             self.initUnity()
             unity_warmed_up = true
+            completed(controller?.rootVie
             self.listenAppState()
         }
         
